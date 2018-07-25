@@ -62,6 +62,7 @@ class ApiRequest(models.Model):
         self.env['sms.log'].create({ 'response_code':respData,
                             'partner_id':RequestData.get('partner_id'),
                             'model_id':RequestData.get('model_id'),
+                            'message':message,
                             'model_name':RequestData.get('model_name')
                             })
         return True

@@ -8,4 +8,6 @@ class SmsLogFile(models.Model):
     model_id=fields.Integer('ID')
     partner_id=fields.Many2one('res.partner', "Partner")
     model_name = fields.Char(string='Document Model',readonly=True)
+    message = fields.Text(string='Message Sent',readonly=True)
+
 SmsLogFile()
