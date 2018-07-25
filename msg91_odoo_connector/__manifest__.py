@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    "name":  "MSG91 SMS Gateway",
+    "summary":  "This module allows you to send sms notification to your users for the order confirmation, delivery, validation etc.",
+    "category":  "Marketing",
+    "version":  "1.2.0",
+    "sequence":  1,
+    "author":  "Bhargavi Kompelli",
+    "license":  "Other proprietary",
+    "description":  """This module allows you to send sms notification to your users for the order confirmation, delivery, validation etc""",
+    "depends":  ['sale','point_of_sale','mail','account'],
+    'data': [   
+                'views/inherit_menu.xml',
+                'views/sms_config_view.xml',
+                'views/sms_log_file_view.xml',
+                'views/sms_template_view.xml',
+                'edi/sms_template_for_order_confirm_so.xml',
+                'edi/sms_template_for_order_confirm_pos.xml',
+                'edi/sms_template_for_inv_validate.xml',
+                'edi/sms_template_for_inv_paid.xml',
+            ],
+#    "images":  ['static/description/Banner.png'],
+    "application":  True,
+    "installable":  True,
+    "auto_install":  False,
+}

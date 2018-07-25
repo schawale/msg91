@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="sms_msg_91_parent"  parent="base.menu_administration" name="MSG91 Odoo Configuration" sequence="3"/>
+    </data>
+</odoo>

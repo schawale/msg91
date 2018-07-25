@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="0">
+        <record id="sms_template_for_pos_order_conform" model="sms.template">
+            <field name="name">SMS Notification to customer When POS Order get confirm</field>
+            <field name="condition">order_confirm_pos</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="sms_body_html"><![CDATA[
+              Hello ${object.partner_id.name},Thanks for shopping with us.Looking forward for recurring business with you again.Here is your ${object.state in ('draft', 'sent') and 'quotation' or 'order confirmation'} from ${object.company_id.name}:
+              REFERENCES
+              Order number: ${object.name}
+                            ]]>
+            </field>
+        </record>
+    </data>
+</openerp>

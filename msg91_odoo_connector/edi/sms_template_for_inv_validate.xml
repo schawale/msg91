@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="0">
+        <record id="sms_template_for_inv_validated" model="sms.template">
+            <field name="name">SMS Notification to customer When Invoice Validated</field>
+            <field name="condition">invoice_vaildate</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="sms_body_html"><![CDATA[
+              Hello ${object.partner_id.name},Your Invoice with reference ${object.number} is successfully validated.]]>
+            </field>
+        </record>
+    </data>
+</openerp>
