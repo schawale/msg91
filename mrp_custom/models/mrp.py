@@ -134,7 +134,7 @@ class MRPWorkOrder(models.Model):
         # TDE CLEANME
         timeline = self.env['mrp.workcenter.productivity']
         for res_user_id in self.res_user_ids:
-            if res_user_id.id==login_user_id or manager==Ture:
+            if res_user_id.id==login_user_id or manager==True:
                 if self.duration < self.duration_expected:
                     loss_id = self.env['mrp.workcenter.productivity.loss'].search([('loss_type','=','productive')], limit=1)
                     if not len(loss_id):
