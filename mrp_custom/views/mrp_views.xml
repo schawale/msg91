@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id='view_mrp_workorder_inherit' model='ir.ui.view'>
+            <field name="name">mrp.workorder.form.inherit</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='is_produced']" position="after">
+                    <field name="res_user_ids" widget="many2many_tags" string="Users"/>  
+                </xpath>
+            </field>
+        </record>
+    <record model="ir.ui.view" id="workcenter_line_kanban_inherit">
+        <field name="name">mrp.production.work.order.kanban.inherit</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.workcenter_line_kanban"/>
+
+        <field name="arch" type="xml">
+                <xpath expr="//field[@name='production_id']" position="after">
+                    <field name="res_user_ids" widget="many2many_kanban"/>
+                </xpath>
+                <xpath expr="//templates" position="replace">
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <strong><span><t t-esc="record.production_id.value"/></span> - <span><t t-esc="record.name.value"/></span></strong>
+                                <div class="row">
+                                    <div class="col-xs-7 o_kanban_primary_left">
+                                        <span><t t-esc="record.product_id.value"/></span>
+                                    </div>
+                                    <div class="col-xs-5 o_kanban_primary_right">
+                                        <span><t t-esc="record.qty_production.value"/> <t t-esc="record.product_uom_id.value"/></span>
+                                    </div>
+                                    <div class="col-xs-7 o_kanban_primary_left">
+
+                                    <t t-name="kanban-box">
+                                        <field name="res_user_ids"/>
+                                    </t>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+                </xpath>
+
+        </field>
+    </record>
+        
+    <record model="ir.actions.act_window" id="mrp.action_mrp_workorder_production_specific">
+        <field name="view_mode">tree,form,kanban,gantt,calendar,pivot,graph</field>
+    </record>
+        
+</odoo>
