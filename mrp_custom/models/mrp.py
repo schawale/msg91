@@ -1,6 +1,10 @@
 from odoo import api, fields, models,_
 from odoo.exceptions import UserError, RedirectWarning, ValidationError
 from datetime import datetime
+from collections import defaultdict
+import math
+from odoo.addons import decimal_precision as dp
+from odoo.tools import float_compare
 
 class MRPWorkOrder(models.Model):
     _inherit = "mrp.workorder"
