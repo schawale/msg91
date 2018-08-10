@@ -6,8 +6,63 @@
             <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='is_produced']" position="after">
-                    <field name="res_user_ids" widget="many2many_tags" string="Users"/>  
+                    <field name="res_user_ids" widget="many2many_tags" string="User/Worker"/>  
                 </xpath>
+            </field>
+        </record>
+        <record id='view_mrp_production_inherit' model='ir.ui.view'>
+            <field name="name">mrp.production.form.inherit</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="res_user_ids" widget="many2many_tags" string="User/Worker"/>  
+                </xpath>
+            </field>
+        </record>
+        
+    <record id="mrp_production_kanban_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.kanban.inherit</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_kanban_view"/>
+
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="res_user_ids" widget="many2many_kanban"/>
+                    <field name="member_color"/>
+                </xpath>
+                
+                <xpath expr="//templates" position="replace">
+                    <templates>
+                        <t t-name="kanban-box">
+                        <!--<div t-attf-class="oe_kanban_card oe_kanban_global_click">-->
+
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)}">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.product_id.value"/></span></strong>
+                                    </div>
+                                    <span class="pull-right text-right"><t t-esc="record.product_qty.value"/> <small><t t-esc="record.product_uom_id.value"/></small></span>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                        <span><t t-esc="record.name.value"/> <t t-esc="record.date_planned_start.value and record.date_planned_start.value.split(' ')[0] or False"/></span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-attf-class="label #{['draft', 'cancel'].indexOf(record.state.raw_value) > -1 ? 'label-default' : ['none'].indexOf(record.state.raw_value) > -1 ? 'label-danger' : ['confirmed'].indexOf(record.state.raw_value) > -1 ? 'label-warning' : ['done'].indexOf(record.state.raw_value) > -1 ? 'label-success' : 'label-primary'}"><t t-esc="record.state.value"/></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-7 o_kanban_primary_left">
+
+                                    <t t-name="kanban-box">
+                                        <field name="res_user_ids"/>
+                                    </t>
+                            </div>
+                            </div>
+                            <!--</div>-->
+                        </t>
+                    </templates>
+                    </xpath>
             </field>
         </record>
     <record model="ir.ui.view" id="workcenter_line_kanban_inherit">
@@ -18,13 +73,14 @@
         <field name="arch" type="xml">
                 <xpath expr="//field[@name='production_id']" position="after">
                     <field name="res_user_ids" widget="many2many_kanban"/>
+                    <field name="member_color"/>
                 </xpath>
                 <xpath expr="//templates" position="replace">
 
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
-                            <div class="oe_kanban_content">
+                        <!--<div t-attf-class="oe_kanban_card oe_kanban_global_click">-->
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)}">                            <div class="oe_kanban_content">
                                 <strong><span><t t-esc="record.production_id.value"/></span> - <span><t t-esc="record.name.value"/></span></strong>
                                 <div class="row">
                                     <div class="col-xs-7 o_kanban_primary_left">
@@ -43,6 +99,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--</div>-->
                     </t>
                 </templates>
                 </xpath>

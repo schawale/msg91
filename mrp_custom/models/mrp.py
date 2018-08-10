@@ -5,11 +5,53 @@ from collections import defaultdict
 import math
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_compare
+from odoo.tools import float_round
+
+class MRPProduction(models.Model):
+    _inherit = "mrp.production"
+    
+    @api.one
+    @api.depends('state')
+    def _compute_color(self):
+        print ("compute coolr getting called------------------")
+        if self.state=='progress':
+#            red6,blu4,darkbrown5,white0,red dark1,orange2,yellow3,7darksky blue,8darkest leafy green,9actualred
+            self.member_color=3
+        elif self.state=='done':
+            self.member_color=4
+        elif self.state=='cancel':
+            self.member_color=6
+        else:
+            self.member_color=0
+            
+    res_user_ids = fields.Many2many('res.users','mrp_workorder_resusers_rel', 'mrp_workorder_id', 'user_id')
+    member_color = fields.Integer(string='Color', store=True, readonly=True, compute='_compute_color',
+                                      track_visibility='always')
 
 class MRPWorkOrder(models.Model):
     _inherit = "mrp.workorder"
     
+    @api.one
+    @api.depends('state')
+    def _compute_color(self):
+        print ("compute coolr getting called------------------")
+        if self.state=='progress':
+#            red6,blu4,darkbrown5,white0,red dark1,orange2,yellow3,7darksky blue,8darkest leafy green,9actualred
+            self.member_color=3
+        elif self.state=='done':
+            self.member_color=4
+        elif self.state=='cancel':
+            self.member_color=6
+        elif self.state=='pending':
+            self.member_color=5
+        elif self.state=='ready':
+            self.member_color=7
+        else:
+            self.member_color=0
+    
     res_user_ids = fields.Many2many('res.users','mrp_workorder_resusers_rel', 'mrp_workorder_id', 'user_id')
+    member_color = fields.Integer(string='Color', store=True, readonly=True, compute='_compute_color',
+                                      track_visibility='always')
 
     @api.multi
     def record_production(self):
