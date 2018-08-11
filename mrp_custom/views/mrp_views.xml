@@ -37,7 +37,8 @@
                         <t t-name="kanban-box">
                         <!--<div t-attf-class="oe_kanban_card oe_kanban_global_click">-->
 
-                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)}">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)} oe_kanban_global_click">
+                                <div class="oe_kanban_content">
                                 <div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings mt4">
                                         <strong class="o_kanban_record_title"><span><t t-esc="record.product_id.value"/></span></strong>
@@ -59,7 +60,7 @@
                                     </t>
                             </div>
                             </div>
-                            <!--</div>-->
+                            </div>
                         </t>
                     </templates>
                     </xpath>
@@ -79,8 +80,9 @@
 
                 <templates>
                     <t t-name="kanban-box">
-                        <!--<div t-attf-class="oe_kanban_card oe_kanban_global_click">-->
-                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)}">                            <div class="oe_kanban_content">
+                        <!--<div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)}">-->                           
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click oe_kanban_color_#{kanban_getcolor(record.member_color.raw_value)}">
+                                <div class="oe_kanban_content">
                                 <strong><span><t t-esc="record.production_id.value"/></span> - <span><t t-esc="record.name.value"/></span></strong>
                                 <div class="row">
                                     <div class="col-xs-7 o_kanban_primary_left">
