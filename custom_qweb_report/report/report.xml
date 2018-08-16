@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <report 
+            id="account_invoices_custom_report"
+            model="account.invoice"
+            string="Invoice"
+            report_type="qweb-pdf"
+            file="custom_qweb_report.invoices_custom_report" 
+            name="custom_qweb_report.invoices_custom_report" 
+        />
+        <record id="custom_qweb_report.account_invoices_custom_report" model="ir.actions.report">
+            <field name="paperformat_id" ref="custom_qweb_report.paper_format_custom_invoice"/>
+        </record>
+    </data>
+</odoo>
+

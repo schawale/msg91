@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="invoices_custom_report_document">
+            <t t-call="web.basic_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                <div class="page">
+                    <style type="text/css">
+                        <t t-call="custom_qweb_report.style_layout"/>
+                    </style>
+                    <div class="border" >
+                        <table  width="99.8%">
+                            <tr>
+                                <td width="20%">
+                                      <div style="margin:5%;border:1px solid black;border-radius: 25px;">
+                                          <img width="100%" height="100px" alt="set company logo" t-attf-src="data:image/png;base64,#{o.company_id.logo}"/>
+                                      </div>
+                                </td>
+                                <td width="55%" style="vertical-align:top;border-right:1px solid black" >
+                                    <div style="margin-top:5%;">
+                                        <b><span t-field="o.company_id.name" style="font-size:20;"/></b><br/>
+                                        <span t-field="o.company_id.street"/>
+                                        <span t-field="o.company_id.street2"/><br/>
+                                        <span t-field="o.company_id.city"/>
+                                        <span t-field="o.company_id.zip"/>
+                                    </div>
+                                </td>
+                              <td width="25%" style="vertical-align:top;">
+                                  <div style="margin:7%;">
+                                  <b><span style="font-size:22;">TAX INVOICE</span></b>
+                                  </div>
+                              </td>
+                            </tr>
+                            <tr style="border-top:1px solid black;border-bottom:1px solid black">
+                                <td colspan="2"  height="60px" style="border-right:1px solid black">
+                                    BUYER - <b><span t-field="o.partner_id.name" style="font-size:18;"/></b><br/>
+                                    ADDRESS - <span t-field="o.partner_id.street" />
+                                    <span t-field="o.partner_id.street2" />
+                                    <span t-field="o.partner_id.city" />
+                                    <span t-field="o.partner_id.state_id.name" /> <br/>
+                                    <span t-field="o.partner_id.country_id.name" /> 
+                                    <span t-field="o.partner_id.zip" /> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span t-field="o.partner_id.phone" /> 
+                                </td>
+                                <td>
+                                    DATE-
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_lines" width="99.9%">
+                           <tr>
+                                <td style="text-align:center;width:12%;border:1px solid black">HSN Code</td>
+                                <td style="text-align:center;width:33%;border:1px solid black">Description</td>
+                                <td style="text-align:center;width:15%;border:1px solid black">QUANTITY <span t-field="o.company_id.currency_id.symbol"/></td>
+                                <td style="text-align:center;width:20%;border:1px solid black">RATE <span t-field="o.company_id.currency_id.symbol"/></td>
+                                <td style="text-align:center;width:20%;border:1px solid black">AMOUNT <span t-field="o.company_id.currency_id.symbol"/></td>
+                            </tr>
+                            <tbody>
+                                <t t-set="lines" t-value="len(o.invoice_line_ids)"/>
+                                <tr t-foreach="o.invoice_line_ids" t-as="l" style="border:1px solid black;">
+                                     <td style="text-align:center;border:1px solid black;">4444</td>
+                                     <td style="text-align:left;border:1px solid black;"><span t-field="l.name"/></td>
+                                     <td style="text-align:center;border:1px solid black;"><span t-field="l.quantity"/></td>
+                                     <td style="text-align:center;border:1px solid black;"><span t-field="l.price_unit"/></td>
+                                     <td style="text-align:center;border:1px solid black;"><span t-field="l.price_subtotal"/></td>
+                                </tr>
+                                <t t-raw="o.get_extra_rows(lines)"/>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-8 pull-left" > 
+                                <div style="margin-top:1%;margin-left:1%">
+                                    <table class="table_lines" style="border:1px solid black;" width="100%">
+                                        <tr>
+                                            <td height="35px" style="border:1px solid black;vertical-align:middle;">
+                                                <b>AMOUNT IN WORDS-</b> <span t-esc="o.get_num2words_amount(o.amount_total)"/><br/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table_lines" style="margin-top:1%;" width="70%">
+                                        <thead>
+                                            <tr style="border:none">
+                                                <th style="border:none">Tax</th>
+                                                <th style="border:none" class="text-right">Base</th>
+                                                <th style="border:none"  class="text-right">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.tax_line_ids" t-as="t" style="border:1px solid black;">
+                                                <td style="border:1px solid black;"><span t-field="t.tax_id.description"/></td>
+                                                <td style="border:1px solid black;" class="text-right">
+                                                    <span t-field="t.base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </td>
+                                                <td style="border:1px solid black;" class="text-right">
+                                                    <span t-field="t.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 pull-right">
+                                <table class="table_lines"  style="border:1px solid black;" width="100%">
+                                    <tr>
+                                        <td style="border:1px solid black;">Subtotal</td>
+                                        <td style="border:1px solid black;" class="text-right">
+                                            <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
+                                        <tr>
+                                            <td style="border:1px solid black;"><span t-esc="amount_by_group[0] if len(o.tax_line_ids) > 1 else (o.tax_line_ids.tax_id.description or o.tax_line_ids.tax_id.name)"/></td>
+                                            <td style="border:1px solid black;" class="text-right">
+                                                <span t-esc="amount_by_group[2]"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td style="border:1px solid black;"><strong>Total</strong></td>
+                                        <td style="border:1px solid black;" class="text-right">
+                                             <b><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></b>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div style="border-bottom:1px solid black;">
+                            <table width="100%">
+                                <tr>
+                                <td width="60%">
+                                </td>
+                                <td  width="40%" class="text-center">
+                                    FOR-<span t-field="o.company_id.name"/>
+                                </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 pull-left" > 
+                                <div style="margin-top:3%;margin-left:1%">
+                                        <table class="table_lines" style="border:1px solid black;" width="100%">
+                                            <tr>
+                                                <td height="35px" style="border:1px solid black;vertical-align:middle;">
+                                                    <b>NOTES-</b> <span t-esc="o.comment"/><br/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 pull-right text-center" style="vertical-align:bottom;"> 
+                                <!--AUTHORISED SIGN-->
+                            </div>
+                        </div>
+                        <div style="border-bottom:1px solid black;">
+                            <table width="100%">
+                                <tr>
+                                <td width="60%">
+                                </td>
+                                <td  width="40%" class="text-center">
+                                    AUTHORISED SIGN
+                                </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin-top:2%;margin-bottom:2%;" class="text-center">
+                            <t t-if="o.company_id.phone"><i class="fa fa-phone"/> <span t-field="o.company_id.phone"/></t>&#160;&#160;&#160;
+                            <t t-if="o.company_id.email"><i class="fa fa-at"/> <span t-field="o.company_id.email"/></t>&#160;&#160;&#160;
+                            <t t-if="o.company_id.website"><i class="fa fa-globe"/> <span t-field="o.company_id.website"/></t>&#160;&#160;&#160;
+                            <t t-if="o.company_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="o.company_id.vat"/></t><br/>
+                            <t t-if="o.company_id.bank_name">HDFC BANK - <span t-field="o.company_id.bank_name"/></t>&#160;&#160;&#160;
+                            <t t-if="o.company_id.bank_ifcode">IFCS CODE - <span t-field="o.company_id.bank_ifcode"/></t>
+                        </div>
+                    </div>
+
+                </div>
+                </t>
+        </template>
+
+        <template id="invoices_custom_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="custom_qweb_report.invoices_custom_report_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
