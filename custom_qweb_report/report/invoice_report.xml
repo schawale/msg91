@@ -8,6 +8,7 @@
                     <style type="text/css">
                         <t t-call="custom_qweb_report.style_layout"/>
                     </style>
+                    <t t-foreach="range(2)" t-as="l">
                     <div class="border" >
                         <table  width="99.8%">
                             <tr>
@@ -48,21 +49,21 @@
                             </tr>
                         </table>
                         <table class="table_lines" width="99.9%">
-                           <tr>
-                                <td style="text-align:center;width:12%;border:1px solid black">HSN Code</td>
-                                <td style="text-align:center;width:33%;border:1px solid black">Description</td>
+                           <tr style="border:none">
+                                <td style="text-align:center;width:12%;border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-left:none;">HSN Code</td>
+                                <td style="text-align:center;width:33%;border:1px solid black;">Description</td>
                                 <td style="text-align:center;width:15%;border:1px solid black">QUANTITY <span t-field="o.company_id.currency_id.symbol"/></td>
                                 <td style="text-align:center;width:20%;border:1px solid black">RATE <span t-field="o.company_id.currency_id.symbol"/></td>
-                                <td style="text-align:center;width:20%;border:1px solid black">AMOUNT <span t-field="o.company_id.currency_id.symbol"/></td>
+                                <td style="text-align:center;width:20%;border-top:1px solid black;border-bottom:1px solid black;border-right:none;border-left:1px solid black;">AMOUNT <span t-field="o.company_id.currency_id.symbol"/></td>
                             </tr>
                             <tbody>
                                 <t t-set="lines" t-value="len(o.invoice_line_ids)"/>
-                                <tr t-foreach="o.invoice_line_ids" t-as="l" style="border:1px solid black;">
-                                     <td style="text-align:center;border:1px solid black;">4444</td>
+                                <tr t-foreach="o.invoice_line_ids" t-as="l" style="border:none">
+                                     <td style="text-align:center;border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-left:none;">4444</td>
                                      <td style="text-align:left;border:1px solid black;"><span t-field="l.name"/></td>
                                      <td style="text-align:center;border:1px solid black;"><span t-field="l.quantity"/></td>
                                      <td style="text-align:center;border:1px solid black;"><span t-field="l.price_unit"/></td>
-                                     <td style="text-align:center;border:1px solid black;"><span t-field="l.price_subtotal"/></td>
+                                     <td style="text-align:center;border-top:1px solid black;border-bottom:1px solid black;border-right:none;border-left:1px solid black;"><span t-field="l.price_subtotal"/></td>
                                 </tr>
                                 <t t-raw="o.get_extra_rows(lines)"/>
                             </tbody>
@@ -100,24 +101,24 @@
                                 </div>
                             </div>
                             <div class="col-xs-4 pull-right">
-                                <table class="table_lines"  style="border:1px solid black;" width="100%">
+                                <table class="table_lines"  style="border:1px solid black;border-top:none;" width="100%">
                                     <tr>
-                                        <td style="border:1px solid black;">Subtotal</td>
-                                        <td style="border:1px solid black;" class="text-right">
+                                        <td style="border:1px solid black;border-top:none;border-right:none;">Subtotal</td>
+                                        <td style="border:1px solid black;border-top:none;border-right:none;" class="text-right">
                                             <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
                                     </tr>
                                     <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
                                         <tr>
-                                            <td style="border:1px solid black;"><span t-esc="amount_by_group[0] if len(o.tax_line_ids) > 1 else (o.tax_line_ids.tax_id.description or o.tax_line_ids.tax_id.name)"/></td>
-                                            <td style="border:1px solid black;" class="text-right">
+                                            <td style="border:1px solid black;border-right:none;"><span t-esc="amount_by_group[0] if len(o.tax_line_ids) > 1 else (o.tax_line_ids.tax_id.description or o.tax_line_ids.tax_id.name)"/></td>
+                                            <td style="border:1px solid black;border-right:none;" class="text-right">
                                                 <span t-esc="amount_by_group[2]"/>
                                             </td>
                                         </tr>
                                     </t>
                                     <tr>
-                                        <td style="border:1px solid black;"><strong>Total</strong></td>
-                                        <td style="border:1px solid black;" class="text-right">
+                                        <td style="border:1px solid black;border-right:none;"><strong>Total</strong></td>
+                                        <td style="border:1px solid black;border-right:none;" class="text-right">
                                              <b><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></b>
                                         </td>
                                     </tr>
@@ -171,7 +172,8 @@
                             <t t-if="o.company_id.bank_ifcode">IFCS CODE - <span t-field="o.company_id.bank_ifcode"/></t>
                         </div>
                     </div>
-
+                    <br/>
+                    </t>
                 </div>
                 </t>
         </template>
