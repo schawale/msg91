@@ -19,7 +19,7 @@
                                 </td>
                                 <td width="55%" style="vertical-align:top;border-right:1px solid black" >
                                     <div style="margin-top:5%;">
-                                        <b><span t-field="o.company_id.name" style='font-size:20;font-family:calibri'</b><br/>
+                                        <b><span t-field="o.company_id.name" style='font-size:20;font-family:calibri'></b><br/>
                                         <span t-field="o.company_id.street"/>
                                         <span t-field="o.company_id.street2"/><br/>
                                         <span t-field="o.company_id.city"/>
