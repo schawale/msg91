@@ -19,11 +19,11 @@ class AccountInvoice(models.Model):
                 rows+="<tr style='border:none;'>"
                 for each in range(0,5):
                     if each==0:
-                        rows+="<td height='20px' style='border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-left:none;'></td>"
+                        rows+="<td height='20px' style='border;none;border-right:1px dotted;border-left:none;'></td>"
                     elif each==4:
-                        rows+="<td height='20px' style='border-top:1px solid black;border-bottom:1px solid black;border-right:none;border-left:1px solid black;'></td>"
+                        rows+="<td height='20px' style='border:none;border-left:1px dotted;'></td>"
                     else:
-                        rows+="<td height='20px' style='border:1px solid black'></td>"
+                        rows+="<td height='20px' style='border:none;border-right:1px dotted;border-left:1px dotted;'></td>"
                 rows+="</tr>"
                 counter +=1
             return rows

@@ -28,7 +28,8 @@
                                 </td>
                               <td width="25%" style="vertical-align:top;">
                                   <div style="margin:7%;">
-                                  <b><span style="font-size:22;">TAX INVOICE</span></b>
+                                  <b><span style="font-size:22;">TAX INVOICE</span></b><br/><br/><br/>
+                                  <b><span t-field="o.number" /></b>
                                   </div>
                               </td>
                             </tr>
@@ -44,82 +45,120 @@
                                     <span t-field="o.partner_id.phone" /> 
                                 </td>
                                 <td>
-                                    DATE-
+                                    <div style="margin-left:4%">
+                                    <b>DATE- <span  t-field="o.date_invoice" t-field-options='{"format": "dd/MM/yyyy"}'/><br/><br/>
+                                    EWAY BILL- </b>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
-                        <table class="table_lines" width="99.9%">
+                        <table class="table_lines text-center" width="99.9%">
+                            <thead>
                            <tr style="border:none">
-                                <td style="text-align:center;width:12%;border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-left:none;">HSN Code</td>
-                                <td style="text-align:center;width:33%;border:1px solid black;">Description</td>
-                                <td style="text-align:center;width:15%;border:1px solid black">QUANTITY <span t-field="o.company_id.currency_id.symbol"/></td>
-                                <td style="text-align:center;width:20%;border:1px solid black">RATE <span t-field="o.company_id.currency_id.symbol"/></td>
-                                <td style="text-align:center;width:20%;border-top:1px solid black;border-bottom:1px solid black;border-right:none;border-left:1px solid black;">AMOUNT <span t-field="o.company_id.currency_id.symbol"/></td>
+                                <th class='text-center' style="width:12%;border-top:1px solid black;border-bottom:1px solid black;border-right:1px dotted;border-left:none;">HSN</th>
+                                <th class='text-center' style="width:33%;border:1px solid black;border-left:1px dotted;border-right:1px dotted">Description</th>
+                                <th class='text-center' style="width:15%;border:1px solid black;border-left:1px dotted;border-right:1px dotted">QUANTITY </th>
+                                <th class='text-center' style="width:20%;border:1px solid black;border-left:1px dotted;border-right:1px dotted">RATE </th>
+                                <th class='text-center' style="width:20%;border-top:1px solid black;border-bottom:1px solid black;border-right:none;border-left:1px dotted;">AMOUNT</th>
                             </tr>
+                            </thead>
                             <tbody>
                                 <t t-set="lines" t-value="len(o.invoice_line_ids)"/>
                                 <tr t-foreach="o.invoice_line_ids" t-as="l" style="border:none">
-                                     <td style="text-align:center;border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-left:none;">4444</td>
-                                     <td style="text-align:left;border:1px solid black;"><span t-field="l.name"/></td>
-                                     <td style="text-align:center;border:1px solid black;"><span t-field="l.quantity"/></td>
-                                     <td style="text-align:center;border:1px solid black;"><span t-field="l.price_unit"/></td>
-                                     <td style="text-align:center;border-top:1px solid black;border-bottom:1px solid black;border-right:none;border-left:1px solid black;"><span t-field="l.price_subtotal"/></td>
+                                     <td style="text-align:center;border:none;border-right:1px dotted;"><span t-field="l.product_id.l10n_in_hsn_code"/></td>
+                                     <td style="text-align:left;border-left:1px dotted;border-right:1px dotted;"><span t-field="l.name"/></td>
+                                     <td style="border-left:1px dotted;border-right:1px dotted;"><span t-esc="'%.0f'%l.quantity"/></td>
+                                     <td style="border-left:1px dotted;border-right:1px dotted;"><span t-esc="'%.0f'%l.price_unit"/></td>
+                                     <td style="border:none;border-left:1px dotted;"><span t-esc="'%.0f'%l.price_subtotal"/></td>
                                 </tr>
                                 <t t-raw="o.get_extra_rows(lines)"/>
+                                <tr>
+                                    <td style="border-bottom:1px solid black"></td>
+                                    <td style="border-bottom:1px solid black"></td>
+                                    <td style="border-bottom:1px solid black"></td>
+                                    <td style="border-bottom:1px solid black"></td>
+                                    <td style="border-bottom:1px solid black"></td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="row">
-                            <div class="col-xs-8 pull-left" > 
+                            <div class="col-xs-6"> 
                                 <div style="margin-top:1%;margin-left:1%">
-                                    <table class="table_lines" style="border:1px solid black;" width="100%">
+                                    <table  width="100%">
                                         <tr>
-                                            <td height="35px" style="border:1px solid black;vertical-align:middle;">
-                                                <b>AMOUNT IN WORDS-</b> <span t-esc="o.get_num2words_amount(o.amount_total)"/><br/>
+                                            <td style="vertical-align:middle;">
+                                                <b>AMOUNT IN WORDS :</b> 
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                <span t-esc="o.get_num2words_amount(o.amount_total)"/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <t t-if="o.comment">
+                                            <td>
+                                                <br/>
+                                                <b>NOTES-</b> 
+                                                    <span t-esc="o.comment"/>
+                                                    <br/>
+                                            </td>
+                                            </t>
+                                        </tr>
                                     </table>
-                                    <table class="table_lines" style="margin-top:1%;" width="70%">
+                                </div>
+                            </div>
+                            <div class="col-xs-3" width="70px" style='padding:0px;'>
+                                    <table class="table_lines text-center" style="margin-top:1%;" width="100%">
                                         <thead>
                                             <tr style="border:none">
-                                                <th style="border:none">Tax</th>
-                                                <th style="border:none" class="text-right">Base</th>
-                                                <th style="border:none"  class="text-right">Amount</th>
+                                                <th width="10%" class='text-center' style="border:none">HSN</th>
+                                                <th width="20%" class='text-center' style="border:none">TAX</th>
+                                                <th width="15%" class='text-center' style="border:none">AMOUNT</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach="o.tax_line_ids" t-as="t" style="border:1px solid black;">
-                                                <td style="border:1px solid black;"><span t-field="t.tax_id.description"/></td>
-                                                <td style="border:1px solid black;" class="text-right">
-                                                    <span t-field="t.base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            <tr t-foreach="o.tax_line_ids" t-as="t" style="border:1px dotted;">
+                                                <td style="border:1px dotted;">
+<!--                                                    <t t-if="t.hsn_code">
+                                                    <span t-field="t.hsn_code"/>
+                                                    </t>-->
                                                 </td>
-                                                <td style="border:1px solid black;" class="text-right">
-                                                    <span t-field="t.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                <td style="border:1px dotted;" >
+                                                    <span t-field="t.tax_id.description" />
+                                                </td>
+                                                <td style="border:1px dotted;">
+                                                    <span t-esc="'%.0f'%t.amount" />
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                <!--</div>-->
                             </div>
-                            <div class="col-xs-4 pull-right">
-                                <table class="table_lines"  style="border:1px solid black;border-top:none;" width="100%">
+                            <div class="col-xs-3 pull-right" >
+                                <table class="table_lines text-center"  style="border:1px solid black;border-top:none;" width="100%">
                                     <tr>
-                                        <td style="border:1px solid black;border-top:none;border-right:none;">Subtotal</td>
-                                        <td style="border:1px solid black;border-top:none;border-right:none;" class="text-right">
-                                            <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        <td style="border:1px dotted;border-top:none;border-right:none;border-left:1px solid black" width="35%">SUBTOTAL</td>
+                                        <td style="border:1px dotted;border-top:none;border-right:none;" width="65%">
+                                            <span t-esc="'%.0f'%o.amount_untaxed"/>
                                         </td>
                                     </tr>
-                                    <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
-                                        <tr>
-                                            <td style="border:1px solid black;border-right:none;"><span t-esc="amount_by_group[0] if len(o.tax_line_ids) > 1 else (o.tax_line_ids.tax_id.description or o.tax_line_ids.tax_id.name)"/></td>
-                                            <td style="border:1px solid black;border-right:none;" class="text-right">
-                                                <span t-esc="amount_by_group[2]"/>
-                                            </td>
+                                    <t t-foreach="o.tax_line_ids" t-as="tax">
+                                        <tr >
+                                            <t t-if="len(tax) > 0">
+                                                <td style="border:1px dotted;border-right:none;border-left:1px solid black">
+                                                    <span t-field="tax.tax_id.description" />
+                                                </td>
+                                                <td style="border:1px dotted;border-right:none;">
+                                                    <span t-esc="'%.0f'%tax.amount" />
+                                                </td>
+                                            </t>
                                         </tr>
                                     </t>
                                     <tr>
-                                        <td style="border:1px solid black;border-right:none;"><strong>Total</strong></td>
-                                        <td style="border:1px solid black;border-right:none;" class="text-right">
-                                             <b><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></b>
+                                        <td style="border:1px dotted;border-right:none;border-left:1px solid black;"><strong>TOTAL</strong></td>
+                                        <td style="border:1px dotted;border-right:none;" >
+                                            <b> <span t-esc="'%.0f'%o.amount_total"/><span t-field="o.company_id.currency_id.symbol"/></b>
                                         </td>
                                     </tr>
                                 </table>
@@ -128,41 +167,58 @@
                         <div style="border-bottom:1px solid black;">
                             <table width="100%">
                                 <tr>
-                                <td width="60%">
-                                </td>
-                                <td  width="40%" class="text-center">
-                                    FOR-<span t-field="o.company_id.name"/>
-                                </td>
+                                    <td width="60%">
+                                    </td>
+                                    <td  width="40%" style="padding:left:50px;" class="text-center">
+                                       <p style="padding:left:20px;"><b> FOR-<span t-field="o.company_id.name"/></b></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" height="60px">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="60%">
+                                    </td>
+                                    <td  width="40%" class="text-center" style="font-size:12;">
+                                        <b>
+                                            <span style="padding:left:20px;"> AUTHORISED SIGN</span>
+                                        </b>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
-                        <div class="row">
+<!--                        <div class="row">
                             <div class="col-xs-8 pull-left" > 
                                 <div style="margin-top:3%;margin-left:1%">
-                                        <table class="table_lines" style="border:1px solid black;" width="100%">
+                                        <table class="table_lines" width="100%">
                                             <tr>
-                                                <td height="35px" style="border:1px solid black;vertical-align:middle;">
-                                                    <b>NOTES-</b> <span t-esc="o.comment"/><br/>
+                                                <td height="35px" style="vertical-align:middle;">
+                                                    <t t-if="o.comment">
+                                                    <b>NOTES-</b> 
+                                                    <span t-esc="o.comment"/>
+                                                    <br/>
+                                                    </t>
                                                 </td>
                                             </tr>
                                         </table>
                                 </div>
                             </div>
                             <div class="col-xs-4 pull-right text-center" style="vertical-align:bottom;"> 
-                                <!--AUTHORISED SIGN-->
+                                AUTHORISED SIGN
                             </div>
-                        </div>
-                        <div style="border-bottom:1px solid black;">
+                        </div>-->
+<!--                        <div style="border-bottom:1px solid black;">
                             <table width="100%">
                                 <tr>
                                 <td width="60%">
                                 </td>
-                                <td  width="40%" class="text-center">
-                                    AUTHORISED SIGN
+                                <td  width="40%" class="text-center" style="font-size:12;">
+                                   <b> AUTHORISED SIGN</b>
                                 </td>
                                 </tr>
                             </table>
-                        </div>
+                        </div>-->
                         <div style="margin-top:2%;margin-bottom:2%;" class="text-center">
                             <t t-if="o.company_id.phone"><i class="fa fa-phone"/> <span t-field="o.company_id.phone"/></t>&#160;&#160;&#160;
                             <t t-if="o.company_id.email"><i class="fa fa-at"/> <span t-field="o.company_id.email"/></t>&#160;&#160;&#160;
@@ -172,6 +228,7 @@
                             <t t-if="o.company_id.bank_ifcode">IFCS CODE - <span t-field="o.company_id.bank_ifcode"/></t>
                         </div>
                     </div>
+                    <br/>
                     <br/>
                     </t>
                 </div>
