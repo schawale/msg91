@@ -18,6 +18,9 @@
                 <xpath expr="//field[@name='origin']" position="after">
                     <field name="res_user_ids" widget="many2many_tags" string="User/Worker"/>  
                 </xpath>
+                <xpath expr="//button[@name='button_plan']" position="attributes">
+                    <attribute name="context">{'default_res_user_ids':res_user_ids}</attribute>  
+                </xpath>
             </field>
         </record>
         
@@ -97,10 +100,10 @@
                                         <field name="res_user_ids"/>
                                     </t>
                                     </div>
-                                    <div class="col-xs-9 o_kanban_primary_left">
+                                  <!--  <div class="col-xs-9 o_kanban_primary_left">
                                         <span>Expected Duration : 
                                         <field name="duration_expected" widget="float_time"/> minutes</span>
-                                    </div>
+                                    </div>-->
                                     <div class="col-xs-7 o_kanban_primary_left">
                                         <span>Real Duration : </span>
                                         <button style="pointer-events: none;" class="oe_inline label label-default">

@@ -19,7 +19,7 @@
                                 </td>
                                 <td width="55%" style="vertical-align:top;border-right:1px solid black" >
                                     <div style="margin-top:5%;">
-                                        <b><span t-field="o.company_id.name" style='font-size:20;font-family:calibri'></b><br/>
+                                        <b><span t-field="o.company_id.name" style='font-size:20;font-family:calibri'/></b><br/>
                                         <span t-field="o.company_id.street"/>
                                         <span t-field="o.company_id.street2"/><br/>
                                         <span t-field="o.company_id.city"/>
@@ -92,7 +92,8 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span t-esc="o.get_num2words_amount(o.amount_total)"/><br/>
+						<t t-set="total_amount" t-value="'%.0f'%o.amount_total"/>
+                                                <span t-esc="o.get_num2words_amount(total_amount)"/><br/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -120,9 +121,9 @@
                                         <tbody>
                                             <tr t-foreach="o.tax_line_ids" t-as="t" style="border:1px dotted;">
                                                 <td style="border:1px dotted;">
-<!--                                                    <t t-if="t.hsn_code">
+                                                    <t t-if="t.hsn_code">
                                                     <span t-field="t.hsn_code"/>
-                                                    </t>-->
+                                                    </t>
                                                 </td>
                                                 <td style="border:1px dotted;" >
                                                     <span t-field="t.tax_id.description" />
