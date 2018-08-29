@@ -19,7 +19,7 @@
                                 </td>
                                 <td width="55%" style="vertical-align:top;border-right:1px solid black" >
                                     <div style="margin-top:5%;">
-                                        <b><span t-field="o.company_id.name" style='font-size:20;font-family:calibri'/></b><br/>
+                                        <b><span t-field="o.company_id.name" style='font-size:30'/></b><br/>
                                         <span t-field="o.company_id.street"/>
                                         <span t-field="o.company_id.street2"/><br/>
                                         <span t-field="o.company_id.city"/>
@@ -28,7 +28,7 @@
                                 </td>
                               <td width="25%" style="vertical-align:top;" class="text-center">
                                   <div style="margin:7%;margin-left:10%">
-                                  <b><span style="font-size:27;">TAX INVOICE</span></b><br/><br/><br/>
+                                  <b><span style="font-size:27; background-color: #f1f1f1;">TAX INVOICE</span></b><br/><br/><br/>
                                   <b><span style="font-size:19;" t-field="o.number" /></b>
                                   </div>
                               </td>
@@ -93,10 +93,11 @@
                                         <tr>
                                             <td>
 						<t t-set="total_amount" t-value="'%.0f'%o.amount_total"/>
-                                                <span t-esc="o.get_num2words_amount(total_amount)"/><br/>
+                                                <span t-esc="o.get_num2words_amount(total_amount)"/><br/> 
+
                                             </td>
                                         </tr>
-                                        <tr>
+<!--                                        <tr>
                                             <t t-if="o.comment">
                                             <td>
                                                 <br/>
@@ -105,7 +106,7 @@
                                                     <br/>
                                             </td>
                                             </t>
-                                        </tr>
+                                        </tr>-->
                                     </table>
                                 </div>
                             </div>
@@ -168,14 +169,20 @@
                         <div style="border-bottom:1px solid black;">
                             <table width="100%">
                                 <tr>
-                                    <td width="75%">
-                                    </td>
-                                    <td  width="25%" style="padding-top:15px;" class="text-center">
+                                     <t t-if="o.comment">
+                                            <td width="75%">
+                                                <br/>
+                                                <b>NOTES-</b> 
+                                                    <span t-esc="o.comment"/>
+                                                    <br/>
+                                            </td>
+                                            </t>
+                                    <td  width="25%" style="padding-top:20px;" class="text-center">
                                        <b> FOR-<span t-field="o.company_id.name"/></b>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" height="60px">
+                                    <td colspan="2" height="70px">
                                     </td>
                                 </tr>
                                 <tr>
@@ -195,10 +202,10 @@
                             <t t-if="o.company_id.website"><i class="fa fa-globe"/> <span t-field="o.company_id.website"/></t>&#160;&#160;&#160;
                             <t t-if="o.company_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="o.company_id.vat"/></t><br/>
                             <t t-if="o.company_id.bank_name">HDFC BANK - <span t-field="o.company_id.bank_name"/></t>&#160;&#160;&#160;
-                            <t t-if="o.company_id.bank_ifcode">IFCS CODE - <span t-field="o.company_id.bank_ifcode"/></t>
+                            <t t-if="o.company_id.bank_ifcode">IFSC CODE - <span t-field="o.company_id.bank_ifcode"/></t>
                         </div>
                     </div>
-                    <div style="margin-top:5%"/>
+                    <div style="margin-top:9%"/>
                     </t>
                 </div>
                 </t>

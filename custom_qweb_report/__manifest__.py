@@ -14,14 +14,14 @@
     'depends': ['account'],
     'data': [   
                 'report/extended_layout.xml',
-                'report/report.xml',
                 'report/invoice_report.xml',
+                'report/report.xml',
                 'views/res_company_view.xml',
              ],
     # tests order matter
     'test': [
              ],
-    'active': False,
+    'active': True,
     'installable': True,
     'application': True,
 }
