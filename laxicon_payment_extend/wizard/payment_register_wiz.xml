@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="laxicon_payment_extend.view_account_payment_from_invoices_inherited" model="ir.ui.view">
+        <field name="name">account.register.payments.wizard.inherited</field>
+        <field name="model">account.register.payments</field>
+        <field name="inherit_id" ref="account.view_account_payment_from_invoices" />
+        <field name="arch" type="xml">
+        	<xpath expr="//group[1]" position="after">
+                      <field name="tra_journal_name" invisible="1"/>
+                <group string="Bank Payment Detail" attrs="{'invisible': [('journal_name', '!=', 'bank')]}">
+                    <!-- payment type and other reqired detail -->
+                    <group >
+                        <field name="journal_name" invisible="1"/>
+                        <field name="payment_type_mode" widget="selection" attrs="{'invisible': [('journal_name', '!=', 'bank')], 'required':[('journal_name', '=', 'bank')], 'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="cust_bank_name" attrs="{'invisible': [('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="bank_id" attrs="{'required':[('journal_name', '=', 'bank')], 'invisible': [('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}" options='{"no_open": 1,"no_create_edit": 1, "no_open": 1, "no_quick_create": 1}'/>
+                        <field name="acc_no" attrs="{'invisible':[('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}" options='{"no_open": 1,"no_create_edit": 1, "no_open": 1, "no_quick_create": 1}'/>
+                    </group>
+                </group>
+
+                <group attrs="{'invisible': ['|', ('payment_type_mode', '!=', 'cheque'), ('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}">
+                    <group>
+                        <field name="is_account_pay"/>
+                        <field name="cheque_payee_name" attrs="{'required':[('payment_type_mode','=','cheque')], 'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                    <group >
+                        <field name="cheque_date" />
+                        <field name="cheque_number" attrs="{'required':[('payment_type_mode','=','cheque')], 'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                </group>
+
+                <!-- Demand Draft  -->
+                <group attrs="{'invisible': ['|', ('payment_type_mode', '!=', 'draft'), ('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}">
+                    <group>
+                        <field name="dd_number" string="D.D. Number" attrs="{'required':[('payment_type_mode','=','draft')], 'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="dd_date" string="Draft(D.D) Date" attrs="{'required':[('payment_type_mode','=','draft')], 'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                </group>
+
+                <!-- RTGS neft-->
+                <group attrs="{'invisible': ['|', ('payment_type_mode', 'not in', ['rtgs', 'neft']), ('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}">
+                    <group>
+                        <field name="transaction_number" string="Transaction ID" attrs="{'required':[('payment_type_mode','in',['rtgs', 'neft'])], 'readonly': [('state', '!=', 'draft')]}" />
+                    </group>
+                    <group>
+                        <field name="transaction_date" string="Transaction Date" attrs="{'required':[('payment_type_mode','in',['rtgs', 'neft'])], 'readonly': [('state', '!=', 'draft')]}" />
+                    </group>
+                </group>
+
+                <!-- Bank Cash  -->
+                <group attrs="{'invisible': ['|', ('payment_type_mode', '!=', 'cash'), ('journal_name', '!=', 'bank')], 'readonly': [('state', '!=', 'draft')]}">
+                    <group>
+                        <field name="cash_payee_name" attrrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    </group>
+                </group>
+
+                <!-- cash to bank -->
+                <group string="Cash/Bank To Bank Detail" attrs="{'invisible': [ ('tra_journal_name', '!=', 'bank')]}">
+                    <group>
+                        <field name="tra_bank_id" placeholder="Select Bank" attrs="{'required':[('tra_journal_name','=','bank')],'readonly': [('state', '!=', 'draft')]}" options='{"no_open": 1,"no_create_edit": 1, "no_open": 1, "no_quick_create": 1}'/>
+                    </group>
+                    <group>
+                        <field name="tra_acc_no" placeholder="Select Acc Number"  attrs="{'required':[('tra_journal_name','=','bank')],'readonly': [('state', '!=', 'draft')]}" options='{"no_open": 1,"no_create_edit": 1, "no_open": 1, "no_quick_create": 1}'/>
+                    </group>
+                </group>
+                </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_account_voucher_wizard" model="ir.ui.view">
+        <field name="name">Advance Payment</field>
+        <field name="model">account.voucher.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Make Advance Payment">
+                <group>
+                    <group>
+                        <field name="journal_id"
+                                domain="[('type','in',['bank', 'cash'])]"
+                                widget="selection" select="1"
+                                string="Payment Method"/>
+                        <field name="payment_ref"/>
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="date"/>
+                        <field name="amount_total"/>
+                    </group>
+                    <separator string="Operation" colspan="4"/>
+                    <group colspan="4" col="4">
+                        <field name="amount_advance"/>
+                        <field name="currency_id"/>
+                    </group>
+                    <group>
+                        <field name="exchange_rate"/>
+                        <field name="currency_amount"/>
+                    </group>
+                </group>
+                <group string="Bank Payment Detail" attrs="{'invisible': [('journal_name', '!=', 'bank')]}">
+                    <!-- payment type and other reqired detail -->
+                    <group >
+                        <field name="journal_name" invisible="1"/>
+                        <field name="payment_type_mode" attrs="{'invisible': [('journal_name', '!=', 'bank')], 'required':[('journal_name', '=', 'bank')]}"/>
+                        <field name="cust_bank_name" attrs="{'invisible': [('journal_name', '!=', 'bank')]}"/>
+                    </group>
+                    <group>
+                        <field name="bank_id" attrs="{'required':[('journal_name', '=', 'bank')], 'invisible': [('journal_name', '!=', 'bank')]}" options='{"no_open": 1,"no_create_edit": 1, "no_open": 1, "no_quick_create": 1}'/>
+                        <field name="acc_no"  attrs="{'invisible':[('journal_name', '!=', 'bank')]}" options='{"no_open": 1,"no_create_edit": 1, "no_open": 1, "no_quick_create": 1}'/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': ['|', ('payment_type_mode', '!=', 'cheque'), ('journal_name', '!=', 'bank')]}">
+                    <group>
+                        <field name="is_account_pay"/>
+                        <field name="cheque_payee_name" attrs="{'required':[('payment_type_mode','=','cheque')]}"/>
+                    </group>
+                    <group >
+                        <field name="cheque_date" />
+                        <field name="cheque_number" attrs="{'required':[('payment_type_mode','=','cheque')]}"/>
+                    </group>
+                </group>
+                <!-- Demand Draft  -->
+                <group attrs="{'invisible': ['|', ('payment_type_mode', '!=', 'draft'), ('journal_name', '!=', 'bank')]}">
+                    <group>
+                        <field name="dd_number" string="D.D. Number" attrs="{'required':[('payment_type_mode','=','draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="dd_date" string="Draft(D.D) Date" attrs="{'required':[('payment_type_mode','=','draft')]}"/>
+                    </group>
+                </group>
+
+                <!-- RTGS neft-->
+                <group  attrs="{'invisible': ['|', ('payment_type_mode', 'not in', ['rtgs', 'neft']), ('journal_name', '!=', 'bank')]}">
+                    <group>
+                        <field name="transaction_number" string="Transaction ID" attrs="{'required':[('payment_type_mode','in',['rtgs', 'neft'])]}" />
+                    </group>
+                    <group>
+                        <field name="transaction_date" string="Transaction Date"  attrs="{'required':[('payment_type_mode','in',['rtgs', 'neft'])]}" />
+                    </group>
+                </group>
+
+                <!-- Bank Cash  -->
+                <group attrs="{'invisible': ['|', ('payment_type_mode', '!=', 'cash'), ('journal_name', '!=', 'bank')]}">
+                    <group>
+                        <field name="cash_payee_name" />
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="make_advance_payment" string="Make advance payment" type="object" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_account_voucher_wizard" model="ir.actions.act_window">
+        <field name="name">Advance Payment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.voucher.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

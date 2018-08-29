@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="customer_bank_form" model="ir.ui.view">
+        <field name="name">bank.payment.cheque.form</field>
+        <field name="model">bank.payment.cheque</field>
+        <field name="arch" type="xml">
+            <form  string="Customer Bank">
+            	<sheet>
+            		<group>
+                		<field name="name"/>
+            		</group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+	<record id="customer_bank_list" model="ir.ui.view">
+        <field name="name">bank.payment.cheque.list</field>
+        <field name="model">bank.payment.cheque</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Bank">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="customer_bank_search" model="ir.ui.view">
+        <field name="name">bank.payment.cheque.search</field>
+        <field name="model">bank.payment.cheque</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+	<record id="action_customer_bank" model="ir.actions.act_window">
+        <field name="name">Customer Bank Detail</field>
+        <field name="res_model">bank.payment.cheque</field>
+        <field name='view_type'>form</field>
+        <field name='view_mode'>tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a Customer Bank.
+            </p>
+        </field>
+    </record>
+
+	<menuitem
+        action='action_customer_bank'
+        id='cust_bank_menu'
+        parent='payment.root_payment_menu'
+        sequence='20' />
+</odoo>
