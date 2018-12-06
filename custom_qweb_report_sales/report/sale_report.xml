@@ -88,6 +88,28 @@
                                     <table  width="100%">
                                         <tr>
                                             <td style="vertical-align:middle;">
+                                                <b>DELIVERY DATE:</b> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span t-esc="o.requested_date"/><br/> 
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align:middle;">
+                                                <b>SALESPERSON:</b> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span t-esc="o.user_id.name"/><br/> 
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align:middle;">
                                                 <b>AMOUNT IN WORDS :</b> 
                                             </td>
                                         </tr>
