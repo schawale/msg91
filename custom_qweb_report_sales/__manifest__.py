@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Q-Web Custom Report',
+    'name': 'Q-Web Custom Report Sales',
     'description': """
 
 """,
@@ -11,7 +11,7 @@
     'category': 'Sales',
     'author': 'Bhargavi Kompelli',
     'complexity': 'easy',
-    'depends': ['account','sale'],
+    'depends': ['account','sale','laxicon_payment_extend'],
     'data': [   
                 'report/extended_layout.xml',
                 'report/sale_report.xml',

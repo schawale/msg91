@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="sales_custom_report_document">
+        <template id="sales_custom_report_document_new">
             <t t-call="web.basic_layout">
-                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
                 <div class="page">
                     <style type="text/css">
                         <t t-call="custom_qweb_report_sales.style_layout"/>
@@ -28,7 +28,7 @@
                                 </td>
                               <td width="25%" style="vertical-align:top;" class="text-center">
                                   <div style="margin:7%;margin-left:10%">
-                                  <b><span style="font-size:27; background-color: #f1f1f1;">TAX</span></b><br/><br/><br/>
+                                  <b><span style="font-size:27; background-color: #f1f1f1;">ORDER MEMO</span></b><br/><br/><br/>
                                   <b><span style="font-size:19;" t-field="o.name"/></b>
                                   </div>
                               </td>
@@ -65,7 +65,8 @@
                             <tbody>
                                 <t t-set="lines" t-value="len(o.order_line)"/>
                                 <tr t-foreach="o.order_line" t-as="l" style="border:none">
-                                     <td style="text-align:center;border:none;border-right:1px dotted;"><span t-field="l.product_id.l10n_in_hsn_code"/></td>
+                                     <!--<td style="text-align:center;border:none;border-right:1px dotted;"><span t-field="l.product_id.l10n_in_hsn_code"/></td>-->
+                                     <td style="text-align:center;border:none;border-right:1px dotted;"><span t-field="l.product_id.default_code"/></td>
                                      <td style="text-align:left;border-left:1px dotted;border-right:1px dotted;"><span t-field="l.name"/></td>
                                      <td style="border-left:1px dotted;border-right:1px dotted;"><span t-esc="'%.0f'%l.product_uom_qty"/></td>
                                      <td style="border-left:1px dotted;border-right:1px dotted;"><span t-esc="'%.0f'%l.price_unit"/></td>
@@ -97,6 +98,17 @@
 
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td style="vertical-align:middle;">
+                                                <b>TERMS AND CONDITIONS :</b> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span t-esc="o.payment_term_id.name"/><br/> 
+
+                                            </td>
+                                        </tr>
 <!--                                        <tr>
                                             <t t-if="o.comment">
                                             <td>
@@ -110,7 +122,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-xs-3" width="70px" style='padding:0px;'>
+<!--                            <div class="col-xs-3" width="70px" style='padding:0px;'>
                                     <table class="table_lines text-center" style="border-top:none"  width="100%">
                                         <thead>
                                             <tr style="border:none">
@@ -135,8 +147,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                <!--</div>-->
-                            </div>
+                                </div>
+                            </div>-->
                             <div class="col-xs-3 pull-right" >
                                 <table class="table_lines text-center"  style="border:1px solid black;border-top:none;" width="100%">
                                     <tr>
@@ -145,7 +157,19 @@
                                             <span t-esc="'%.0f'%o.amount_untaxed"/>
                                         </td>
                                     </tr>
-                                    <t t-foreach="o.tax_line_ids" t-as="tax">
+                                    <tr>
+                                        <td style="border:1px dotted;border-top:none;border-right:none;border-left:1px solid black" width="35%">ADVANCE</td>
+                                        <td style="border:1px dotted;border-top:none;border-right:none;" width="65%">
+                                        <t t-if="len(o.account_payment_ids) > 0">
+
+                                            <t t-foreach="o.account_payment_ids" t-as="pay">
+                                                    <span t-esc="'%.0f'%pay.amount" />
+                                            </t>
+                                        </t>
+
+                                        </td>
+                                    </tr>
+<!--                                    <t t-foreach="o.tax_line_ids" t-as="tax">
                                         <tr >
                                             <t t-if="len(tax) > 0">
                                                 <td style="border:1px dotted;border-right:none;border-left:1px solid black">
@@ -156,11 +180,11 @@
                                                 </td>
                                             </t>
                                         </tr>
-                                    </t>
+                                    </t>-->
                                     <tr>
-                                        <td style="border:1px dotted;border-right:none;border-left:1px solid black;"><strong>TOTAL</strong></td>
+                                        <td style="border:1px dotted;border-right:none;border-left:1px solid black;"><strong>OUTSTANDING</strong></td>
                                         <td style="border:1px dotted;border-right:none;" >
-                                            <b> <span t-esc="'%.0f'%o.amount_total"/><span t-field="o.company_id.currency_id.symbol"/></b>
+                                            <b> <span t-esc="'%.0f'%o.amount_resisual"/><span t-field="o.company_id.currency_id.symbol"/></b>
                                         </td>
                                     </tr>
                                 </table>
@@ -170,9 +194,9 @@
                             <table width="100%">
                                 <tr>
                                     <td width="75%" rowspan="3">
-                                        <t t-if="o.comment">
+                                        <t t-if="o.note">
                                         <b>NOTES-</b> 
-                                            <span t-esc="o.comment"/>
+                                            <span t-esc="o.note"/>
                                             </t>
                                     </td>
                                     <td  width="25%" style="padding-top:20px;" class="text-center">
@@ -207,10 +231,10 @@
                 </t>
         </template>
 
-        <template id="sale_order_custom_report">
+        <template id="sales_custom_report">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <t t-call="custom_qweb_report_sales.sales_custom_report_document" t-lang="o.partner_id.lang"/>
+                    <t t-call="custom_qweb_report_sales.sales_custom_report_document_new" t-lang="o.partner_id.lang"/>
                 </t>
             </t>
         </template>

@@ -3,14 +3,14 @@
     <data>
         
         <report 
-            id="sale_order_custom_report"
+            id="sale_orders_custom_report"
             model="sale.order"
-            string="Sale Custom"
+            string="Sale Custom Report"
             report_type="qweb-pdf"
-            file="custom_qweb_report_sales.sale_order_custom_report" 
-            name="custom_qweb_report_sales.sale_order_custom_report" 
+            file="custom_qweb_report_sales.sales_custom_report" 
+            name="custom_qweb_report_sales.sales_custom_report" 
         />
-        <record id="custom_qweb_report_sales.sale_order_custom_report" model="ir.actions.report">
+        <record id="custom_qweb_report_sales.sale_orders_custom_report" model="ir.actions.report">
             <field name="paperformat_id" ref="custom_qweb_report_sales.paper_format_custom_sale"/>
         </record>
     </data>
