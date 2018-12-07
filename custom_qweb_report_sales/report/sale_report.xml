@@ -46,7 +46,7 @@
                                 </td>
                                 <td>
                                     <div style="margin-left:4%">
-                                    <b>DATE- <span  t-field="o.date_order" t-field-options='{"format": "dd/MM/yyyy"}'/><br/><br/>
+                                    <b>DATE- <span  t-field="o.date_order" t-field-options='{"format": "dd/MM/yyyy"}'/></b><br/>
                                     </div>
                                 </td>
                             </tr>
