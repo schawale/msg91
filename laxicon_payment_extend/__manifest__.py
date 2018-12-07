@@ -40,7 +40,7 @@
         Cash to Bank detail
         Internal Transfer Detail
 """,
-    'depends': ['account', 'payment','total_payable_receivable'],
+    'depends': ['account', 'payment'],
     'data': [
         'security/ir.model.access.csv',
         # 'wizard/payment_register_wiz.xml',

@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+.idea/
+npm-debug.log
+node_modulesprivate/dump/
+private/dump/ftkshoporders
+node_modules/
+private/download_production_mongodb_data.sh
+private/upload_production_dump_to_local_mongodb.sh
