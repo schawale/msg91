@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="paper_format_custom_sale" model="report.paperformat">
+        <field name="name">Sale Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">12</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+    
+    <template id="style_layout">
+            <style type="text/css">
+                .table_lines td{
+                font-size:15px
+                border:1px solid black;
+                }
+                th,td{
+                padding-left: 5px;
+                border:none;           
+                }
+                .border{
+                        border-width: 1px;  
+                        border-radius: 25px;  
+                        border-style: solid;    
+                        border-color: #1f4060;
+                       }
+            body {
+		font-family: 'Eras ITC', 'Eras Demi ITC',  sans-serif ;
+		}
+            </style>
+        </template>
+</odoo>
