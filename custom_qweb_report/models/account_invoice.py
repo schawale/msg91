@@ -1,12 +1,13 @@
 from odoo import api, models, fields, _
-
+from num2words import num2words
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
-    
-    
+
+
     def get_num2words_amount(self, amount):
-       amt_word=self.company_id.currency_id.amount_to_text(float(amount))
-       return amt_word 
+        amt_word = num2words(float(amount), lang='en_IN')
+        amt_word = str(amt_word).title()
+        return amt_word + 'Rupees'
    
     #get extra row in report
     @api.multi
